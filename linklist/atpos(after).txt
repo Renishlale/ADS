@@ -1,0 +1,105 @@
+ 
+#include <stdio.h>
+#include<stdlib.h>
+
+struct node
+{
+    int data;
+    struct node*next;
+};
+
+
+int insert_pos(int value,struct node**head,int key)
+{
+      
+    
+    struct node*temp=*head; 
+   while(temp!=NULL)
+   {
+       if(temp->data==key)
+       {
+            struct node*newnode;
+            newnode=malloc(sizeof(struct node));
+            newnode->data=value;
+            newnode->next=temp->next;
+            temp->next=newnode;
+       }
+       temp=temp->next;
+   }
+   return 0;
+}
+
+
+
+
+int insert_beg (int value,struct node**head)
+{
+    struct node*newnode;
+    newnode=malloc(sizeof(struct node));
+    newnode->data=value;
+    newnode->next=*head;
+    *head=newnode;
+    return 0;
+}
+
+
+int insert_end(int value,struct node**head)
+{
+    struct node*newnode;
+    newnode=malloc(sizeof(struct node));
+        newnode->data=value;
+    newnode->next=NULL;
+    if(*head==NULL)
+     {
+         *head=newnode;
+         return 0;
+     }
+       struct node*temp=*head;
+    
+    
+    while(temp->next!=NULL)
+    {
+        
+        temp=temp->next;
+        
+    }
+    temp->next=newnode;
+
+    return 0;
+}
+
+int printlist(struct node*head)
+{
+    struct node*temp=head;
+    printf("LINK LIST:");
+    
+    while(temp!=NULL)
+    {
+        printf("%d ->",temp->data);
+        temp=temp->next;
+        
+    }
+    printf("NULL");
+    
+    
+    
+    
+    
+}
+
+int main()
+{
+    struct node * head=NULL;
+    insert_beg(10,&head);
+    insert_beg(20,&head);
+    insert_beg(30,&head);
+    insert_beg(40,&head);
+    insert_end(480,&head);
+    insert_pos(430,&head,20);
+    printlist(head);
+    return 0;
+    
+    
+    
+    
+}
