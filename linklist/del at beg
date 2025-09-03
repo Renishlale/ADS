@@ -1,0 +1,71 @@
+   
+#include <stdio.h>
+#include<stdlib.h>
+
+struct node
+{
+    int data;
+    struct node*next;
+};
+
+  int  del_beg(struct node**head)
+{
+    if(*head==NULL)
+    {
+        printf("\n List doesn't exist.\n ");
+        return 0;
+    }
+     
+    struct node*temp=*head;
+    *head=(temp)->next;
+    int data_value=(temp)->data; 
+    free(temp);
+   
+    return data_value;
+ 
+}
+
+int insert_beginning(int value,struct node**head)
+{
+    struct node*newnode;
+    newnode=malloc(sizeof(struct node));
+    newnode->data=value;
+    newnode->next=*head;
+    *head=newnode;
+    return 0;
+}
+
+int printlist(struct node*head)
+{
+    struct node*temp=head;
+    printf("LINK LIST:");
+    
+    while(temp!=NULL)
+    {
+        printf("%d ->",temp->data);
+        temp=temp->next;
+        
+    }
+    printf("NULL");
+    
+    
+    
+    
+    
+}
+
+int main()
+{
+    struct node*head=NULL;
+    insert_beginning(10,&head);
+    insert_beginning(20,&head);
+    insert_beginning(30,&head);
+    insert_beginning(40,&head); 
+    printf("Delete=%d  \n ",del_beg(&head) );
+    printlist(head);
+    return 0;
+    
+    
+    
+    
+}
