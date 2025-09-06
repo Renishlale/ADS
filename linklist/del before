@@ -15,13 +15,12 @@ struct node
         return;
     }
 
-    // case: if head itself is key → no node before it
+     
     if ((*head)->data == key) {
         printf("No node exists before %d (it is the head)\n", key);
         return;
     }
-
-    // case: if head->next is key → delete head
+ 
     if ((*head)->next->data == key) {
         struct node* temp = *head;
         printf("Delete %d\n", temp->data);
@@ -30,13 +29,13 @@ struct node
         return;
     }
 
-    // traverse to find node before key
+   
     struct node* prev = *head;
     struct node* curr = (*head)->next;
 
     while (curr->next != NULL) {
         if (curr->next->data == key) {
-            // delete curr (node before key)
+             
             printf("Delete %d\n", curr->data);
             prev->next = curr->next;
             free(curr);
