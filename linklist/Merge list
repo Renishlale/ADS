@@ -1,0 +1,73 @@
+      
+#include <stdio.h>
+#include<stdlib.h>
+
+struct node
+{
+    int data;
+    struct node*next;
+};
+
+    struct node* merge(struct node*head1,struct node*head2)
+    {
+         struct node* temp = head1;
+         while(temp->next!=NULL)
+         {
+             temp=temp->next;
+         }
+             temp->next=head2;
+             return head1;
+    }
+    
+    
+    int insert_beginning(int value,struct node**head)
+{
+    struct node*newnode;
+    newnode=malloc(sizeof(struct node));
+    newnode->data=value;
+    newnode->next=*head;
+    *head=newnode;
+    return 0;
+}
+    
+int printlist(struct node*head)
+{
+    struct node*temp=head;
+   
+    
+    while(temp!=NULL)
+    {
+        printf("%d ->",temp->data);
+        temp=temp->next;
+        
+    }
+    printf("NULL");
+    
+    
+    
+    
+    
+}
+
+int main()
+{
+    struct node*head1=NULL;
+    struct node*head2=NULL;
+    insert_beginning(10,&head1);
+    insert_beginning(20,&head1);
+    insert_beginning(30,&head1);
+    insert_beginning(40,&head1); 
+    
+     insert_beginning(10,&head2);
+    insert_beginning(20,&head2);
+    insert_beginning(30,&head2);
+    insert_beginning(40,&head2); 
+    head1=merge(head1,head2);
+    printf("Merge list:");
+    printlist(head1);
+    return 0;
+    
+    
+    
+    
+}
