@@ -1,0 +1,83 @@
+      
+#include <stdio.h>
+#include<stdlib.h>
+
+struct node
+{
+    int data;
+    struct node*next;
+};
+
+    void search(struct node*head,int key)
+    {
+        int f=0;
+        int p=1;
+            struct node*temp=head;
+        while(temp!=NULL)
+        {
+            if(temp->data==key)
+            {
+                f=1;
+                
+                break;
+            }
+               temp=temp->next;
+               p++;
+               
+        }
+        if(f!=0)
+        {
+            printf("Found at %d postion \n ",p);
+        }
+        else
+        {
+            printf("Not found");
+        }
+        
+    }
+    
+    
+    int insert_beginning(int value,struct node**head)
+{
+    struct node*newnode;
+    newnode=malloc(sizeof(struct node));
+    newnode->data=value;
+    newnode->next=*head;
+    *head=newnode;
+    return 0;
+}
+    
+int printlist(struct node*head)
+{
+    struct node*temp=head;
+    printf("LINK LIST:");
+    
+    while(temp!=NULL)
+    {
+        printf("%d ->",temp->data);
+        temp=temp->next;
+        
+    }
+    printf("NULL");
+    
+    
+    
+    
+    
+}
+
+int main()
+{
+    struct node*head=NULL;
+    insert_beginning(10,&head);
+    insert_beginning(20,&head);
+    insert_beginning(30,&head);
+    insert_beginning(40,&head); 
+    search(head,20);
+    printlist(head);
+    return 0;
+    
+    
+    
+    
+}
