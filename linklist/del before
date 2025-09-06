@@ -1,0 +1,95 @@
+     
+#include <stdio.h>
+#include<stdlib.h>
+
+struct node
+{
+    int data;
+    struct node*next;
+};
+
+   void del_bef(struct node** head, int key)
+{
+    if (*head == NULL || (*head)->next == NULL) {
+        printf("No node exists before %d\n", key);
+        return;
+    }
+
+    // case: if head itself is key → no node before it
+    if ((*head)->data == key) {
+        printf("No node exists before %d (it is the head)\n", key);
+        return;
+    }
+
+    // case: if head->next is key → delete head
+    if ((*head)->next->data == key) {
+        struct node* temp = *head;
+        printf("Delete %d\n", temp->data);
+        *head = temp->next;
+        free(temp);
+        return;
+    }
+
+    // traverse to find node before key
+    struct node* prev = *head;
+    struct node* curr = (*head)->next;
+
+    while (curr->next != NULL) {
+        if (curr->next->data == key) {
+            // delete curr (node before key)
+            printf("Delete %d\n", curr->data);
+            prev->next = curr->next;
+            free(curr);
+            return;
+        }
+        prev = curr;
+        curr = curr->next;
+    }
+
+    printf("Key %d not found or no node before it.\n", key);
+}
+
+int insert_beginning(int value,struct node**head)
+{
+    struct node*newnode;
+    newnode=malloc(sizeof(struct node));
+    newnode->data=value;
+    newnode->next=*head;
+    *head=newnode;
+    return 0;
+}
+
+int printlist(struct node*head)
+{
+    struct node*temp=head;
+    printf("LINK LIST:");
+    
+    while(temp!=NULL)
+    {
+        printf("%d ->",temp->data);
+        temp=temp->next;
+        
+    }
+    printf("NULL");
+    
+    
+    
+    
+    
+}
+
+int main()
+{
+    struct node*head=NULL;
+    insert_beginning(10,&head);
+    insert_beginning(20,&head);
+    insert_beginning(30,&head);
+    insert_beginning(40,&head); 
+    del_bef(&head,20);
+    printlist(head);
+    return 0;
+    
+    
+    
+    
+}
