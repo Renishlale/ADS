@@ -9,7 +9,7 @@ struct node
 };
 
 
-int insert_pos(int value,struct node**head,int key)
+int insert_pos_bef(int value,struct node**head,int key)
 {
       
     
@@ -96,11 +96,12 @@ int main()
     insert_beg(30,&head);
     insert_beg(40,&head);
     insert_end(480,&head);
-    insert_pos(430,&head,20);
+    insert_pos_bef(430,&head,20);
     printlist(head);
     return 0;
     
     
     
     
+
 }
