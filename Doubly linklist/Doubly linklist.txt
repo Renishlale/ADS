@@ -1,0 +1,60 @@
+   
+#include <stdio.h>
+#include<stdlib.h>
+
+struct node
+{
+    int data;
+    struct node*next;
+    struct node*prev;
+};
+
+int insert_beginning(int value,struct node**head)
+{
+    struct node*newnode;
+    newnode=malloc(sizeof(struct node));
+    newnode->data=value;
+    newnode->next=*head;
+    newnode->prev=NULL;
+    
+    if(*head!=NULL)
+    {
+        (*head)->prev=newnode;
+    }
+    *head=newnode;
+    return 0;
+}
+
+int printlist(struct node* head)
+{
+    struct node*temp=head;
+    printf(" Doubly lINK LIST(forward):\n ");
+    
+    while(temp!=NULL)
+    {
+        printf("%d <->",temp->data);
+        temp=temp->next;
+        
+    }
+    printf("NULL");
+    
+    
+    
+    
+    
+}
+
+int main()
+{
+    struct node*head=NULL;
+    insert_beginning(10,&head);
+    insert_beginning(20,&head);
+    insert_beginning(30,&head);
+    insert_beginning(40,&head);
+    printlist(head);
+    return 0;
+    
+    
+    
+    
+}
