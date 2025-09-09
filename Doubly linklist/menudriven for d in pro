@@ -1,0 +1,334 @@
+  #include <stdio.h>
+#include <stdlib.h>
+
+struct node {
+    int data;
+    struct node* next;
+    struct node*prev;
+};
+
+// Function declarations
+int insert_beginning(int value, struct node** head);
+int insert_end(int value, struct node** head);
+int insert_pos_bef(int value, struct node** head, int key);
+int insert_pos_aft(int value, struct node** head, int key);
+int del_beg(struct node** head);
+int del_end(struct node** head);
+void del_bef(struct node** head, int key);
+void del_aft(struct node** head, int key);
+int del_pos(struct node** head, int key);
+void search(struct node* head, int key);
+int count(struct node* head);
+struct node* merge(struct node* head1, struct node* head2);
+void printlist(struct node* head);
+
+// Function implementations
+
+int insert_beg (int value, struct node** head) {
+    struct node* newnode = malloc(sizeof(struct node));
+    newnode->data = value;
+    newnode->next = *head;
+    *head = newnode;
+    return 0;
+}
+
+int insert_end(int value, struct node** head) {
+    struct node* newnode = malloc(sizeof(struct node));
+    newnode->data = value;
+    newnode->next = NULL;
+    if (*head == NULL) {
+        *head = newnode;
+        return 0;
+    }
+    struct node* temp = *head;
+    while (temp->next != NULL)
+        temp = temp->next;
+    temp->next = newnode;
+    return 0;
+}
+
+int insert_pos_bef(int value, struct node** head, int key) {
+    if (*head == NULL) {
+        printf("List empty!\n");
+        return -1;
+    }
+    if ((*head)->data == key) {
+        insert_beginning(value, head);
+        return 0;
+    }
+    struct node* temp = *head;
+    while (temp->next != NULL && temp->next->data != key)
+        temp = temp->next;
+    if (temp->next == NULL) {
+        printf("Key not found!\n");
+        return -1;
+    }
+    struct node* newnode = malloc(sizeof(struct node));
+    newnode->data = value;
+    newnode->prev=temp;
+    newnode->next = temp->next;
+    temp->next = newnode;
+    return 0;
+}
+
+int insert_pos_aft(int value, struct node** head, int key) {
+    struct node* temp = *head;
+    while (temp != NULL && temp->data != key)
+        temp = temp->next;
+    if (temp == NULL) {
+        printf("Key not found!\n");
+        return -1;
+    }
+    struct node* newnode = malloc(sizeof(struct node));
+    newnode->data = value;
+    newnode->next = temp->next;
+    newnode->prev=temp;
+    temp->next = newnode;
+    return 0;
+}
+
+int del_beg(struct node** head) {
+    if (*head == NULL) {
+        printf("List doesn't exist.\n");
+        return -1;
+    }
+    struct node* temp = *head;
+    *head = temp->next;
+    temp->next->prev=NULL;
+    int value = temp->data;
+    free(temp);
+    printf("Deleted %d\n", value);
+    return value;
+}
+
+int del_end(struct node** head) {
+    if (*head == NULL) {
+        printf("List doesn't exist.\n");
+        return -1;
+    }
+    struct node* temp = *head;
+    if (temp->next == NULL) {
+        int value = temp->data;
+        free(temp);
+        *head = NULL;
+        printf("Deleted %d\n", value);
+        return value;
+    }
+    struct node* prev = NULL;
+    while (temp->next != NULL) {
+        prev = temp;
+        temp = temp->next;
+    }
+    int value = temp->data;
+    free(temp);
+    prev->next = NULL;
+    printf("Deleted %d\n", value);
+    return value;
+}
+
+void del_bef(struct node** head, int key) {
+    if (*head == NULL || (*head)->next == NULL) {
+        printf("No node exists before %d\n", key);
+        return;
+    }
+    if ((*head)->data == key) {
+        printf("No node exists before %d (it is the head)\n", key);
+        return;
+    }
+    if ((*head)->next->data == key) {
+        struct node* temp = *head;
+        printf("Deleted %d\n", temp->data);
+        *head = temp->next;
+        free(temp);
+        return;
+    }
+    struct node* prev = *head;
+    struct node* curr = (*head)->next;
+    while (curr->next != NULL) {
+        if (curr->next->data == key) {
+            printf("Deleted %d\n", curr->data);
+            prev->next = curr->next;
+            free(curr);
+            return;
+        }
+        prev = curr;
+        curr = curr->next;
+    }
+    printf("Key %d not found or no node before it.\n", key);
+}
+
+void del_aft(struct node** head, int key) {
+    if (*head == NULL) {
+        printf("List doesn't exist.\n");
+        return;
+    }
+    struct node* temp = *head;
+    while (temp != NULL && temp->data != key)
+        temp = temp->next;
+    if (temp == NULL || temp->next == NULL) {
+        printf("No node exists after %d\n", key);
+        return;
+    }
+    struct node* delnode = temp->next;
+    printf("Deleted %d\n", delnode->data);
+    temp->next = delnode->next;
+    free(delnode);
+}
+
+int del_pos(struct node** head, int key) {
+    if (*head == NULL) {
+        printf("List doesn't exist.\n");
+        return -1;
+    }
+    struct node* temp = *head;
+    if (temp->data == key) {
+        *head = temp->next;
+        printf("Deleted %d\n", temp->data);
+        free(temp);
+        return 0;
+    }
+    struct node* prev = NULL;
+    while (temp != NULL && temp->data != key) {
+        prev = temp;
+        temp = temp->next;
+    }
+    if (temp == NULL) {
+        printf("Key not found!\n");
+        return -1;
+    }
+    printf("Deleted %d\n", temp->data);
+    prev->next = temp->next;
+    free(temp);
+    return 0;
+}
+
+void search(struct node* head, int key) {
+    int pos = 1;
+    while (head != NULL) {
+        if (head->data == key) {
+            printf("Found at position %d\n", pos);
+            return;
+        }
+        head = head->next;
+        pos++;
+    }
+    printf("Not found\n");
+}
+
+int count(struct node* head) {
+    int c = 0;
+    while (head != NULL) {
+        c++;
+        head = head->next;
+    }
+    printf("Number of nodes: %d\n", c);
+    return c;
+}
+
+struct node* merge(struct node* head1, struct node* head2) {
+    if (head1 == NULL)
+        return head2;
+    struct node* temp = head1;
+    while (temp->next != NULL)
+        temp = temp->next;
+    temp->next = head2;
+    return head1;
+}
+
+void printlist(struct node* head) {
+    printf("List: ");
+    while (head != NULL) {
+        printf("%d -> ", head->data);
+        head = head->next;
+    }
+    printf("NULL\n");
+}
+
+// Main function
+int main() {
+    struct node* head1 = NULL;
+    struct node* head2 = NULL;
+    int choice, value, key;
+
+    while (1) {
+        printf("\n--- Singly Linked List Menu ---\n");
+        printf("1. Insert at beginning\n2. Insert at end\n3. Insert before\n4. Insert after\n5. Delete at beginning\n");
+        printf("6. Delete at end\n7. Delete before\n8. Delete after\n9. Delete at position\n10. Search element\n");
+        printf("11. Count nodes\n12. Merge two lists\n13. Display list\n0. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+                printf("Enter value: ");
+                scanf("%d", &value);
+                insert_beginning(value, &head1);
+                break;
+            case 2:
+                printf("Enter value: ");
+                scanf("%d", &value);
+                insert_end(value, &head1);
+                break;
+            case 3:
+                printf("Enter value: ");
+                scanf("%d", &value);
+                printf("Enter key: ");
+                scanf("%d", &key);
+                insert_pos_bef(value, &head1, key);
+                break;
+            case 4:
+                printf("Enter value: ");
+                scanf("%d", &value);
+                printf("Enter key: ");
+                scanf("%d", &key);
+                insert_pos_aft(value, &head1, key);
+                break;
+            case 5:
+                del_beg(&head1);
+                break;
+            case 6:
+                del_end(&head1);
+                break;
+            case 7:
+                printf("Enter key: ");
+                scanf("%d", &key);
+                del_bef(&head1, key);
+                break;
+            case 8:
+                printf("Enter key: ");
+                scanf("%d", &key);
+                del_aft(&head1, key);
+                break;
+            case 9:
+                printf("Enter key: ");
+                scanf("%d", &key);
+                del_pos(&head1, key);
+                break;
+            case 10:
+                printf("Enter key: ");
+                scanf("%d", &key);
+                search(head1, key);
+                break;
+            case 11:
+                count(head1);
+                break;
+            case 12:
+                printf("Creating second list...\n");
+                insert_beginning(10, &head2);
+                insert_beginning(20, &head2);
+                insert_beginning(30, &head2);
+                insert_beginning(40, &head2);
+                head1 = merge(head1, head2);
+                printf("Lists merged.\n");
+                break;
+            case 13:
+                printlist(head1);
+                break;
+            case 0:
+                exit(0);
+            default:
+                printf("Invalid choice!\n");
+        }
+    }
+    return 0;
+}
