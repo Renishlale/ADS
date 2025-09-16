@@ -1,0 +1,29 @@
+  
+#include <stdio.h>
+
+int sum_num(int n);
+
+
+int main() 
+{
+    int n;
+    
+    printf("\n Enter the number:");
+    scanf("%d",&n);
+       
+   printf("\nSum of %d=%d",n,sum_num(n));
+    return 0;
+}
+
+int sum_num(int n)
+{
+    if(n==0)
+    {
+        return 0;
+    }
+    
+    else
+    {
+        return ((n%10)+sum_num(n/10));
+    }
+}
