@@ -1,0 +1,35 @@
+  
+#include <stdio.h>
+
+int sum_upto(int n);
+
+
+int main() 
+{
+    int n;
+    
+    printf("\n Enter the number:");
+    scanf("%d",&n);
+    if(n<0)
+    {
+        printf("Please enter a non-negative number.\n");
+        return 0;
+    }
+
+       
+   printf("Sum of number from 0 to %d=%d",n,sum_upto(n));
+    return 0;
+}
+
+int sum_upto(int n)
+{
+    if(n==0)
+    {
+        return 0;
+    }
+    
+    else
+    {
+        return (n+sum_upto(n-1));
+    }
+}
