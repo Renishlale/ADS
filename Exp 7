@@ -1,0 +1,56 @@
+   CREATE TABLE dept (
+    deptno INT PRIMARY KEY,
+   dname  VARCHAR(20),
+   loc    VARCHAR(20)
+);
+
+INSERT INTO dept VALUES (10, 'ACCOUNTING', 'NEW YORK');
+INSERT INTO dept VALUES (20, 'RESEARCH',   'DALLAS');
+INSERT INTO dept VALUES (30, 'SALES',      'CHICAGO');
+INSERT INTO dept VALUES (40, 'OPERATIONS', 'BOSTON');
+
+CREATE TABLE emp (
+    empno   INT PRIMARY KEY,
+    ename   VARCHAR(20),
+    job     VARCHAR(20),
+    deptno  INT
+);
+
+ INSERT INTO emp VALUES (7369, 'SMITH',  'CLERK',    20);
+INSERT INTO emp VALUES (7499, 'ALLEN',  'SALESMAN', 30);
+INSERT INTO emp VALUES (7521, 'WARD',   'SALESMAN', 30);
+INSERT INTO emp VALUES (7566, 'JONES',  'MANAGER',  20);
+INSERT INTO emp VALUES (7698, 'BLAKE',  'MANAGER',  30);
+INSERT INTO emp VALUES (7782, 'CLARK',  'MANAGER',  10);
+INSERT INTO emp VALUES (7839, 'KING',   'PRESIDENT',10);
+INSERT INTO emp VALUES (7900, 'JAMES',  'CLERK',    30);
+INSERT INTO emp VALUES (7902, 'FORD',   'ANALYST',  20);
+INSERT INTO emp VALUES (7934, 'MILLER', 'CLERK',    10); 
+ select deptno from emp
+  union 
+   select deptno from Dept;
+
+
+ select deptno from emp
+  union all
+  select deptno from Dept;
+  
+
+  SELECT deptno FROM emp
+  MINUS
+ SELECT deptno FROM dept;
+ 
+SELECT deptno FROM dept
+MINUS
+SELECT deptno FROM emp;
+
+
+
+
+
+
+
+
+
+
+
