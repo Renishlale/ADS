@@ -1,0 +1,50 @@
+ #include <stdio.h>
+#define MAX 5
+
+int queue[MAX], front = -1, rear = -1;
+
+void insert(int item) {
+    if (rear == MAX - 1) {
+        printf("Queue Overflow\n");
+    } else {
+        if (front == -1) front = 0;
+        queue[++rear] = item;
+        printf("%d inserted\n", item);
+    }
+}
+
+void delete() {
+    if (front == -1 || front > rear) {
+        printf("Queue Underflow\n");
+    } else {
+        printf("%d deleted\n", queue[front++]);
+    }
+}
+  int display()
+    {
+        printf("Queue:\n");
+        if(front==-1||front>rear)
+        {
+            printf("Stack empty.");
+        }
+        else
+        {
+            for(int i=1;i<=rear;i++)
+            {
+                printf(" %d ",queue[i]);
+            }
+            
+        }
+        return 0;
+    }
+int main() {
+    insert(10);
+    insert(20);
+    delete();
+    insert(30);
+    delete();
+     
+  
+    display();
+    return 0;
+}
