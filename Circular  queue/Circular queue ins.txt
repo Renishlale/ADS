@@ -1,0 +1,62 @@
+#include <stdio.h>
+#define size 5
+int queue[size];
+int rear=-1;
+int front=-1;
+int insert(int value)
+{
+    if((rear+1)%size==front)
+    {
+        printf("The circular queue is full\n");
+        return 0;
+    }
+    if (front==-1)
+    {
+        front=rear=0;
+    }
+    else
+    {
+        rear=(rear+1)%size;
+       
+    }
+     queue[rear]=value;
+        printf("%d inserted \n",value);
+        return 0;
+}
+int display()
+{
+   if(front==-1)
+   {
+       printf("The circular queue is empty.\n");
+       return 0;
+   }
+   else
+   {
+       printf("\nCircular queue elements:\n");
+       int i=front;
+       while(1)
+       {
+           printf("%d ",queue[i]);
+           if(i==rear)
+           {
+               break;
+           }
+           i=(i+1)%size;
+       }
+       printf("\n");
+   }
+   return 0;
+   
+}
+
+
+int main() 
+{
+    insert(10);
+    insert(20);
+    insert(30);
+    insert(40);
+    display();
+
+    return 0;
+}
