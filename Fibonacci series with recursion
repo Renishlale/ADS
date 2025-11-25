@@ -1,40 +1,36 @@
-   
-#include <stdio.h>
+  #include <stdio.h>
 
-int fib();
-
+int fib(int n);   // function declaration should include parameter
 
 int main() 
 {
     int n;
     
-    printf("\n Enter the number of terms:");
-    scanf("%d",&n);
-     printf("\nFibonacii series:\n");
-    for(int i=0;i<n;i++)
+    printf("\n Enter the number of terms: ");
+    scanf("%d", &n);
+
+    printf("\nFibonacci series:\n");
+
+    for (int i = 0; i < n; i++)
     {
-        printf("%d",fib(i));
-            printf("\n");
+        printf("%d\n", fib(i));
     }
-    printf("\n");
- 
+    
     return 0;
 }
 
 int fib(int n)
 {
-    if(n==0)
+    if (n == 0)
     {
         return 0;
     }
-    else if(n==1)
+    else if (n == 1)
     {
         return 1;
     }
     else
     {
-        return (fib(n-1)+fib(n-2));
+        return fib(n - 1) + fib(n - 2);
     }
-
-    
 }
